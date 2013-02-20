@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+<script src="../lib/prototype.js"></script>
+<script>
+//properties are directly passed to `create` method
+var Instrument = Class.create({
+  initialize: function(name) {
+    this.name = name;
+  },
+  play: function() {
+	    return 'playing ' + this.name;
+	  }
+  , desc: function() {}
+});
+
+// when subclassing, specify the class you want to inherit from
+var Guitar = Class.create(Instrument, {
+  // redefine the desc method
+  desc: function($super) {
+    return 'you are playing ' + this.name;
+  }
+});
+
+var guitar = new Guitar('Guitar');
+console.log('Play : ' + guitar.play());
+console.log('Desc : ' + guitar.desc());
+
+
+//Mix in
+var TwelveStringMixin = {
+	desc : function() {
+		return 'I am mix in for 12 strings'
+	}
+};
+
+//no inheritance    
+var TwelveString = Class.create(TwelveStringMixin, {
+	play: function() {
+	    return 'playing 12 strings';
+	  }
+});
+
+var twelve = new TwelveString();
+console.log('mixin desc : ' + twelve.desc());
+console.log('mixin desc : ' + twelve.play());
+</script>
+</head>
+<body>
+</body>
+</html>
